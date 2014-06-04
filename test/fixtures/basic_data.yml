@@ -1,0 +1,20 @@
+Member:
+  member1:
+    id: 1
+    name: A
+    is_active: 1
+  member2:
+    id: 2
+    name: B
+    is_active: 1
+
+Community:
+  community1:
+    id: 1
+    name: communityA
+    CommunityMember:
+      community1_member1: { Member: member1 }
+      community1_member2: { Member: member2 }
+  community2:
+    id: 2
+    name: communityB
