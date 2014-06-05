@@ -1,0 +1,18 @@
+actAs:
+  - Timestampable
+options:
+  charset: utf8
+
+NewsletterSubscriber:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    mail_address: { type: string(255), notnull: true }
+    is_active: { type: boolean, notnull: true, default: true }
+  indexes:
+    mail_address:
+      fields: [mail_address]
+      type: unique
+    is_active:
+      fields: [is_active]
+
+# vim: et fenc=utf-8 sts=2 sw=2 ts=2
