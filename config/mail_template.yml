@@ -14,4 +14,20 @@ pc:
     variables:
       'op_config.sns_name': SNS 名
 
+  newsletterUnsubscribe:
+    caption: ニュースレター登録解除確認メール
+    sample:
+      ja_JP:
+        - '{{ op_config.sns_name }} ニュースレター登録解除'
+        - |
+          {{ op_config.sns_name }} ニュースレターの登録を解除いたしました。
+          
+          再登録はこちらまで
+          {% app_url_for('pc_frontend', 'newsletter/subscribe', true) %}
+          
+          何かご不明点がございましたら、pne.jpサービス サポート担当(support@pne.jp)までご連絡ください。
+    variables:
+      'op_config.sns_name': SNS 名
+
+
 # vim: et fenc=utf-8 sts=2 sw=2 ts=2

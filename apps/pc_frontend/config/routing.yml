@@ -2,6 +2,10 @@ newsletter_subscribe:
   url: /newsletter/subscribe
   params: { module: newsletter, action: subscribe }
 
+newsletter_unsubscribe:
+  url: /newsletter/unsubscribe
+  params: { module: newsletter, action: unsubscribe }
+
 newsletter_nodefault:
   url: /newsletter/*
   params: { module: default, action: error }

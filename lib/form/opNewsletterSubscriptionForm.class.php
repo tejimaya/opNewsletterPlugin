@@ -53,6 +53,38 @@ class opNewsletterSubscriptionForm extends NewsletterSubscriberForm
     }
   }
 
+  public function doUnsubscribe()
+  {
+    if (!$this->isValid())
+    {
+      throw new LogicException('The form is not valid.');
+    }
+
+    $conn = $this->getConnection();
+    $conn->beginTransaction();
+    try
+    {
+      $mailAddress = $this->values['mail_address'];
+
+      $subscriber = NewsletterSubscriberTable::getInstance()
+        ->findOneByMailAddressForUpdate($mailAddress);
+
+      if ($subscriber)
+      {
+        $subscriber->delete($conn);
+
+        $this->sendMail('newsletterUnsubscribe', $mailAddress);
+      }
+
+      $conn->commit();
+    }
+    catch (Exception $ex)
+    {
+      $conn->rollback();
+      throw $ex;
+    }
+  }
+
   protected function sendMail($templateName, $toMailAddress, $params = array())
   {
     $fromMailAddress = opConfig::get('admin_mail_address');
