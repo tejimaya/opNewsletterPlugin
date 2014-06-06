@@ -1,0 +1,9 @@
+newsletter_subscribe:
+  url: /newsletter/subscribe
+  params: { module: newsletter, action: subscribe }
+
+newsletter_nodefault:
+  url: /newsletter/*
+  params: { module: default, action: error }
+
+# vim: et fenc=utf-8 sts=2 sw=2 ts=2

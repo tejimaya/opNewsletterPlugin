@@ -18,5 +18,13 @@ class PluginNewsletterSubscriberTable extends Doctrine_Table
   {
     return Doctrine_Core::getTable('PluginNewsletterSubscriber');
   }
+
+  public function findOneByMailAddressForUpdate($mailAddress)
+  {
+    return $this->createQuery()
+      ->forUpdate()
+      ->andWhere('mail_address = ?', $mailAddress)
+      ->fetchOne();
+  }
 }
 // vim: et fenc=utf-8 sts=2 sw=2 ts=2
