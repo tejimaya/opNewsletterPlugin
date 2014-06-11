@@ -9,6 +9,12 @@ class newsletterActions extends sfActions
 {
   public function executeSubscribe(opWebRequest $request)
   {
+    $subscriberCount = NewsletterSubscriberTable::getInstance()->count();
+    if ($subscriberCount >= sfConfig::get('op_newsletter_subscriber_limit', 1000))
+    {
+      return sfView::ERROR;
+    }
+
     $form = new opNewsletterSubscriptionForm();
 
     if ($request->isMethod(sfWebRequest::POST))
