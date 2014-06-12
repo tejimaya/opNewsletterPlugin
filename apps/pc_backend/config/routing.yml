@@ -2,6 +2,10 @@ newsletter_send:
   url: /newsletter/send
   params: { module: newsletter, action: send }
 
+newsletter_subscriberManage:
+  url: /newsletter/subscriberManage
+  params: { module: newsletter, action: subscriberManage }
+
 newsletter_nodefault:
   url: /newsletter/*
   params: { module: default, action: error }

@@ -26,5 +26,34 @@ class newsletterActions extends sfActions
 
     return sfView::INPUT;
   }
+
+  public function executeSubscriberManage(opWebRequest $request)
+  {
+    $form = new opNewsletterSubscriberManageForm();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $form->bind($request[$form->getName()]);
+      if ($form->isValid())
+      {
+        if (!isset($request['submit_remove']))
+        {
+          $form->doSubscribeAll();
+          $this->getUser()->setFlash('notice', '登録完了しました。');
+        }
+        else
+        {
+          $form->doUnsubscribeAll();
+          $this->getUser()->setFlash('notice', '登録解除完了しました。');
+        }
+
+        $this->redirect(array('sf_route' => 'newsletter_subscriberManage'));
+      }
+    }
+
+    $this->form = $form;
+
+    return sfView::INPUT;
+  }
 }
 // vim: et fenc=utf-8 sts=2 sw=2 ts=2
