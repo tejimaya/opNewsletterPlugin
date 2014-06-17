@@ -25,32 +25,10 @@ class opNewsletterSubscriptionForm extends NewsletterSubscriberForm
       throw new LogicException('The form is not valid.');
     }
 
-    $conn = $this->getConnection();
-    $conn->beginTransaction();
-    try
-    {
-      $mailAddress = $this->values['mail_address'];
+    $sendMail = $this->getOption('sendMail', true);
 
-      $subscriber = NewsletterSubscriberTable::getInstance()
-        ->findOneByMailAddressForUpdate($mailAddress);
-
-      if (!$subscriber)
-      {
-        $subscriber = NewsletterSubscriberTable::getInstance()->create(array(
-          'mail_address' => $mailAddress,
-        ));
-        $subscriber->save($conn);
-
-        $this->sendMail('newsletterSubscribe', $mailAddress);
-      }
-
-      $conn->commit();
-    }
-    catch (Exception $ex)
-    {
-      $conn->rollback();
-      throw $ex;
-    }
+    NewsletterSubscriberTable::getInstance()
+      ->subscribe($this->values['mail_address'], $sendMail);
   }
 
   public function doUnsubscribe()
@@ -60,38 +38,10 @@ class opNewsletterSubscriptionForm extends NewsletterSubscriberForm
       throw new LogicException('The form is not valid.');
     }
 
-    $conn = $this->getConnection();
-    $conn->beginTransaction();
-    try
-    {
-      $mailAddress = $this->values['mail_address'];
+    $sendMail = $this->getOption('sendMail', true);
 
-      $subscriber = NewsletterSubscriberTable::getInstance()
-        ->findOneByMailAddressForUpdate($mailAddress);
-
-      if ($subscriber)
-      {
-        $subscriber->delete($conn);
-
-        $this->sendMail('newsletterUnsubscribe', $mailAddress);
-      }
-
-      $conn->commit();
-    }
-    catch (Exception $ex)
-    {
-      $conn->rollback();
-      throw $ex;
-    }
-  }
-
-  protected function sendMail($templateName, $toMailAddress, $params = array())
-  {
-    $fromMailAddress = opConfig::get('admin_mail_address');
-
-    opMailSend::sendTemplateMail($templateName, $toMailAddress, $fromMailAddress, $params + array(
-      'target' => 'pc',
-    ));
+    NewsletterSubscriberTable::getInstance()
+      ->unsubscribe($this->values['mail_address'], $sendMail);
   }
 }
 // vim: et fenc=utf-8 sts=2 sw=2 ts=2

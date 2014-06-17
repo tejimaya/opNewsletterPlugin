@@ -3,27 +3,16 @@
 include dirname(__FILE__).'/../../bootstrap/unit.php';
 include dirname(__FILE__).'/../../bootstrap/database.php';
 
-$t = new lime_test(9);
+$t = new lime_test(5);
 
 $conn = Doctrine_Manager::connection();
-
-class opNewsletterSubscriptionForm_Mock extends opNewsletterSubscriptionForm
-{
-  public $lastMail, $lastMailTo;
-
-  protected function sendMail($templateName, $toMailAddress, $params = array())
-  {
-    $this->lastMail = $templateName;
-    $this->lastMailTo = $toMailAddress;
-  }
-}
 
 //------------------------------------------------------------------------------
 $t->diag('opNewsletterSubscriptionForm::doSubscribe()');
 
 $conn->beginTransaction();
 
-$form = new opNewsletterSubscriptionForm_Mock();
+$form = new opNewsletterSubscriptionForm(null, array('sendMail' => false));
 $form->bind(array(
   'mail_address' => 'sns@example.com',
 ));
@@ -31,9 +20,6 @@ $form->bind(array(
 $t->ok($form->isValid());
 
 $form->doSubscribe();
-
-$t->is($form->lastMail, 'newsletterSubscribe');
-$t->is($form->lastMailTo, 'sns@example.com');
 
 $subscriber = NewsletterSubscriberTable::getInstance()
   ->findOneByMailAddress('sns@example.com');
@@ -54,7 +40,7 @@ $subscriber = NewsletterSubscriberTable::getInstance()->create(array(
 ));
 $subscriber->save($conn);
 
-$form = new opNewsletterSubscriptionForm_Mock();
+$form = new opNewsletterSubscriptionForm(null, array('sendMail' => false));
 $form->bind(array(
   'mail_address' => 'sns@example.com',
 ));
@@ -62,9 +48,6 @@ $form->bind(array(
 $t->ok($form->isValid());
 
 $form->doUnsubscribe();
-
-$t->is($form->lastMail, 'newsletterUnsubscribe');
-$t->is($form->lastMailTo, 'sns@example.com');
 
 $subscriber = NewsletterSubscriberTable::getInstance()
   ->findOneByMailAddress('sns@example.com');

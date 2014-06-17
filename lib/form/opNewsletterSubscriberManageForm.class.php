@@ -43,8 +43,6 @@ class opNewsletterSubscriberManageForm extends BaseForm
     return $cleanMailAddress;
   }
 
-  // TODO: opNewsletterSubscriptionForm と重複している処理を共通化
-
   public function doSubscribeAll()
   {
     if (!$this->isValid())
@@ -52,32 +50,10 @@ class opNewsletterSubscriberManageForm extends BaseForm
       throw new LogicException('The form is not valid.');
     }
 
-    $conn = $this->getConnection();
-    $conn->beginTransaction();
-    try
-    {
-      foreach ($this->values['mail_address'] as $mailAddress)
-      {
-        $subscriber = NewsletterSubscriberTable::getInstance()
-          ->findOneByMailAddressForUpdate($mailAddress);
+    $sendMail = $this->getOption('sendMail', true);
 
-        if (!$subscriber)
-        {
-          $subscriber = NewsletterSubscriberTable::getInstance()->create(array(
-            'mail_address' => $mailAddress,
-          ));
-          $subscriber->save($conn);
-          $subscriber->free(true);
-        }
-      }
-
-      $conn->commit();
-    }
-    catch (Exception $ex)
-    {
-      $conn->rollback();
-      throw $ex;
-    }
+    NewsletterSubscriberTable::getInstance()
+      ->subscribeAll($this->values['mail_address'], $sendMail);
   }
 
   public function doUnsubscribeAll()
@@ -87,34 +63,10 @@ class opNewsletterSubscriberManageForm extends BaseForm
       throw new LogicException('The form is not valid.');
     }
 
-    $conn = $this->getConnection();
-    $conn->beginTransaction();
-    try
-    {
-      foreach ($this->values['mail_address'] as $mailAddress)
-      {
-        $subscriber = NewsletterSubscriberTable::getInstance()
-          ->findOneByMailAddressForUpdate($mailAddress);
+    $sendMail = $this->getOption('sendMail', true);
 
-        if ($subscriber)
-        {
-          $subscriber->delete($conn);
-          $subscriber->free(true);
-        }
-      }
-
-      $conn->commit();
-    }
-    catch (Exception $ex)
-    {
-      $conn->rollback();
-      throw $ex;
-    }
-  }
-
-  public function getConnection()
-  {
-    return opDoctrineQuery::getMasterConnection();
+    NewsletterSubscriberTable::getInstance()
+      ->unsubscribeAll($this->values['mail_address'], $sendMail);
   }
 }
 // vim: et fenc=utf-8 sts=2 sw=2 ts=2
