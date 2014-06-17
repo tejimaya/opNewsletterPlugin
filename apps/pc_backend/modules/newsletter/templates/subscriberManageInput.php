@@ -33,6 +33,10 @@
 -->
 </style>
 
+<?php slot('submenu') ?>
+<?php include_partial('submenu') ?>
+<?php end_slot() ?>
+
 <h2>ニュースレターアドレス追加・削除</h2>
 
 <?php echo $form->renderFormTag(url_for('@newsletter_subscriberManage'), array('method' => 'POST', 'id' => 'newsletter_subscriber_form')) ?>

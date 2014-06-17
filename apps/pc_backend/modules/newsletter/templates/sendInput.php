@@ -28,6 +28,10 @@
 -->
 </style>
 
+<?php slot('submenu') ?>
+<?php include_partial('submenu') ?>
+<?php end_slot() ?>
+
 <h2>ニュースレター配信</h2>
 
 <?php echo $form->renderFormTag(url_for('@newsletter_send'), array('method' => 'POST', 'id' => 'newsletter_form')) ?>

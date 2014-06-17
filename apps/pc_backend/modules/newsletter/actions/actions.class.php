@@ -7,6 +7,11 @@
  */
 class newsletterActions extends sfActions
 {
+  public function executeIndex(opWebRequest $request)
+  {
+    $this->redirect(array('sf_route' => 'newsletter_send'));
+  }
+
   public function executeSend(opWebRequest $request)
   {
     $form = new opNewsletterSendForm();

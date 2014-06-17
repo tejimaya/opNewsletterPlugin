@@ -1,3 +1,7 @@
+newsletter_index:
+  url: /newsletter
+  params: { module: newsletter, action: index }
+
 newsletter_send:
   url: /newsletter/send
   params: { module: newsletter, action: send }
