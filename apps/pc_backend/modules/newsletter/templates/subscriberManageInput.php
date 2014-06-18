@@ -43,6 +43,7 @@
   <?php echo $form->renderHiddenFields() ?>
   <?php echo $form->renderGlobalErrors() ?>
 
+  <?php echo $form['mail_address']->renderError() ?>
   <?php echo $form['mail_address']->render(array('placeholder' => 'メールアドレス (一行ずつ改行)')) ?>
 
   <p>&#8251;登録・解除の操作実行後、対象のメールアドレス宛にそれぞれ登録・解除の案内メールを送信します。</p>
