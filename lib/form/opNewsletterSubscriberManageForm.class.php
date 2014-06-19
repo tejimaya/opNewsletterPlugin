@@ -14,10 +14,6 @@ class opNewsletterSubscriberManageForm extends BaseForm
       'callback' => array($this, 'validateMailAddress'),
     )));
 
-    $this->mergePostValidator(new sfValidatorCallback(array(
-      'callback' => array($this, 'validateSubscriberLimit'),
-    )));
-
     $this->widgetSchema->setNameFormat('newsletter_subscriber[%s]');
   }
 
@@ -47,15 +43,49 @@ class opNewsletterSubscriberManageForm extends BaseForm
     return $cleanMailAddress;
   }
 
+  public function setAddLimitValidator()
+  {
+    $validator = new sfValidatorCallback(array(
+      'callback' => array($this, 'validateSubscriberLimit'),
+      'arguments' => array('remove' => false),
+    ));
+
+    $this->validatorSchema->setPostValidator($validator);
+  }
+
+  public function setRemoveLimitValidator()
+  {
+    $validator = new sfValidatorCallback(array(
+      'callback' => array($this, 'validateSubscriberLimit'),
+      'arguments' => array('remove' => true),
+    ));
+
+    $this->validatorSchema->setPostValidator($validator);
+  }
+
   public function validateSubscriberLimit(sfValidatorCallback $validator, array $values, array $arguments)
   {
     $subscriberLimit = sfConfig::get('op_newsletter_subscriber_limit', 1000);
     $subscriberCount = NewsletterSubscriberTable::getInstance()->count();
 
-    if ($subscriberCount + count($values['mail_address']) > $subscriberLimit)
+    $addCount = count($values['mail_address']);
+    if ($arguments['remove'])
     {
-      $message = sprintf('ニュースレター配信登録数%d件を超えてしまうため登録できません。現在登録可能な件数は%d件です。',
-        $subscriberLimit, $subscriberLimit - $subscriberCount);
+      $addCount *= -1;
+    }
+
+    if ($subscriberCount + $addCount > $subscriberLimit)
+    {
+      if (!$arguments['remove'])
+      {
+        $message = sprintf('ニュースレター配信登録数%d件を超えてしまうため登録できません。現在登録可能な件数は%d件です。',
+          $subscriberLimit, $subscriberLimit - $subscriberCount);
+      }
+      else
+      {
+        $message = sprintf('入力されたメールアドレスが%d件を超えているため削除できません。メールアドレスの入力は%d件までとして下さい。',
+          $subscriberLimit, $subscriberLimit);
+      }
 
       throw new sfValidatorErrorSchema($validator, array(
         'mail_address' => new sfValidatorError($validator, $message),

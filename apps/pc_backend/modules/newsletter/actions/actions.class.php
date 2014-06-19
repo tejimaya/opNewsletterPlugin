@@ -38,10 +38,20 @@ class newsletterActions extends sfActions
 
     if ($request->isMethod(sfWebRequest::POST))
     {
+      $remove = isset($request['submit_remove']);
+      if (!$remove)
+      {
+        $form->setAddLimitValidator();
+      }
+      else
+      {
+        $form->setRemoveLimitValidator();
+      }
+
       $form->bind($request[$form->getName()]);
       if ($form->isValid())
       {
-        if (!isset($request['submit_remove']))
+        if (!$remove)
         {
           $form->doSubscribeAll();
           $this->getUser()->setFlash('notice', '登録完了しました。');
