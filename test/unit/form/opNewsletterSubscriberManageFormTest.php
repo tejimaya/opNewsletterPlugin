@@ -95,14 +95,7 @@ sfConfig::set('op_newsletter_subscriber_limit', 2);
 $form = new opNewsletterSubscriberManageForm();
 $form->setRemoveLimitValidator();
 
-// 2 件以上削除しないと上限に収まらない
-$form->bind(array(
-  'mail_address' => <<<'EOT'
-sns+04@example.com
-EOT
-));
-$t->ok(!$form->isValid());
-
+// 削除時には登録件数ではなく入力された件数の上限として判定する
 $form->bind(array(
   'mail_address' => <<<'EOT'
 sns+03@example.com
@@ -110,6 +103,15 @@ sns+04@example.com
 EOT
 ));
 $t->ok($form->isValid());
+
+$form->bind(array(
+  'mail_address' => <<<'EOT'
+sns+02@example.com
+sns+03@example.com
+sns+04@example.com
+EOT
+));
+$t->ok(!$form->isValid());
 
 $conn->rollback();
 
