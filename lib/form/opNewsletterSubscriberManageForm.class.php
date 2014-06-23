@@ -67,17 +67,19 @@ class opNewsletterSubscriberManageForm extends BaseForm
   {
     $subscriberLimit = sfConfig::get('op_newsletter_subscriber_limit', 1000);
 
+    $subscriberCount = NewsletterSubscriberTable::getInstance()->count();
+    $inputCount = count($values['mail_address']);
+
     if (!$arguments['remove'])
     {
-      $subscriberCount = NewsletterSubscriberTable::getInstance()->count()
-        + count($values['mail_address']);
+      $isValid = $subscriberCount + $inputCount > $subscriberLimit;
     }
     else
     {
-      $subscriberCount = count($values['mail_address']);
+      $isValid = $inputCount > $subscriberLimit;
     }
 
-    if ($subscriberCount > $subscriberLimit)
+    if ($isValid)
     {
       if (!$arguments['remove'])
       {
