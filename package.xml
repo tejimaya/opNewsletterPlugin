@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opNewsletterPlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary>opNewsletterPlugin</summary>
+ <description>SNS未登録者へメールを送信できるプラグインです。</description>
+ <lead>
+  <name>kaoru nishizoe</name>
+  <user>nishizoe</user>
+  <email />
+  <active>yes</active>
+ </lead>
+ <date>2014-07-10</date>
+ <time>20:44:02</time>
+ <version>
+  <release>0.9.0</release>
+  <api>0.9.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license>apache</license>
+ <notes>
+0.9.0 alpha release.
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="b86227f98f0f2cb5e96fc43f0ae1073a" name="apps/pc_backend/config/routing.yml" role="data" />
+   <file baseinstalldir="/" md5sum="a9b1a23190984ae2daee8e8e4065cb72" name="apps/pc_backend/modules/newsletter/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="c66b55e5c9cecf6d293b26065397ea46" name="apps/pc_backend/modules/newsletter/actions/components.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="55239d5fa8156b42b1fc6eac1cbeb784" name="apps/pc_backend/modules/newsletter/templates/sendInput.php" role="data" />
+   <file baseinstalldir="/" md5sum="d98c181bc3d9c43a5dcf9e2ffc2f938a" name="apps/pc_backend/modules/newsletter/templates/subscriberManageInput.php" role="data" />
+   <file baseinstalldir="/" md5sum="5e8a3702c818b16acf04e24ff4b4a5f6" name="apps/pc_backend/modules/newsletter/templates/_submenu.php" role="data" />
+   <file baseinstalldir="/" md5sum="17529e1d922abed0245157efd210b579" name="apps/pc_backend/modules/newsletter/templates/_subscriberList.php" role="data" />
+   <file baseinstalldir="/" md5sum="6780572a033138901027612fd40d439c" name="apps/pc_frontend/config/routing.yml" role="data" />
+   <file baseinstalldir="/" md5sum="3c13c2de5a24e153c70ed1d22ccda01b" name="apps/pc_frontend/modules/newsletter/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="003c3ce09900d6751be2bb79e5204b19" name="apps/pc_frontend/modules/newsletter/templates/subscribeError.php" role="data" />
+   <file baseinstalldir="/" md5sum="33c70037904f2c5ce2429b752c7dd2ac" name="apps/pc_frontend/modules/newsletter/templates/subscribeInput.php" role="data" />
+   <file baseinstalldir="/" md5sum="bb1c3256dc8d105e9ddbfb88d5145501" name="apps/pc_frontend/modules/newsletter/templates/subscribeSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="743b62ee7d93246e81fa0f16f2006834" name="apps/pc_frontend/modules/newsletter/templates/unsubscribeInput.php" role="data" />
+   <file baseinstalldir="/" md5sum="e8f757f4e353e2740cc799512a26c407" name="apps/pc_frontend/modules/newsletter/templates/unsubscribeSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="9404bb579fceeb14614d9b4c29294348" name="config/mail_template.yml" role="data" />
+   <file baseinstalldir="/" md5sum="5dff7ee8fad813f5b48c8df3a5831f38" name="config/doctrine/scheme.yml" role="data" />
+   <file baseinstalldir="/" md5sum="2921e1d85e1b41ed1fe924c05b8beaf3" name="data/fixtures/000_revision.yml" role="data" />
+   <file baseinstalldir="/" md5sum="ed102cc3867c7c77185a2866897cc1d1" name="data/fixtures/001_navigations.yml" role="data" />
+   <file baseinstalldir="/" md5sum="b1942b5cd66f6873a8abcf741bd6b32b" name="data/migrations/001_initialize.php" role="data" />
+   <file baseinstalldir="/" md5sum="98a246a71fe34ba840bd126c3e38b505" name="data/migrations/002_add_navi_backend.php" role="data" />
+   <file baseinstalldir="/" md5sum="ed102cc3867c7c77185a2866897cc1d1" name="data/migrations/fixtures/002_add_navi_backend.yml" role="data" />
+   <file baseinstalldir="/" md5sum="eae4e1928954a139787381e0acbc560b" name="lib/filter/doctrine/PluginNewsletterSubscriberFormFilter.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="af23545df1e4e6966ddd2b3b9fa49827" name="lib/form/opNewsletterSendForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="add2d45cf1ceef79e59bdbe91d36620b" name="lib/form/opNewsletterSubscriberManageForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="ea92f5576491951c2351326510a5c6d0" name="lib/form/opNewsletterSubscriptionForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="77b306e2725eb1ffaab4cb9840ae0109" name="lib/form/doctrine/PluginNewsletterSubscriberForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="730bb527c44e397977341d9cd30adb53" name="lib/model/doctrine/PluginNewsletterSubscriber.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="f14fc14c5b79eae5a462f66876710199" name="lib/model/doctrine/PluginNewsletterSubscriberTable.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="6059fe5458d6348af2659d38af527912" name="test/bootstrap/database.php" role="data" />
+   <file baseinstalldir="/" md5sum="155ce720c060aa5fc9e2bbbc779b7a13" name="test/bootstrap/functional.php" role="data" />
+   <file baseinstalldir="/" md5sum="53df737807ad0e3ba7dd2abb8cab3e3c" name="test/bootstrap/unit.php" role="data" />
+   <file baseinstalldir="/" md5sum="b22efe2e6bf84faee5cddd921112b479" name="test/fixtures/basic_data.yml" role="data" />
+   <file baseinstalldir="/" md5sum="40d5ff865caceca4aa56397841d3bbff" name="test/unit/form/opNewsletterSubscriberManageFormTest.php" role="data" />
+   <file baseinstalldir="/" md5sum="1037bf6a1bd1ce0cadb720b6b223d2f1" name="test/unit/form/opNewsletterSubscriptionFormTest.php" role="data" />
+   <file baseinstalldir="/" md5sum="a7e4136d9804826fb3521d1b09c6e8c7" name="README.rst" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.9.0</release>
+    <api>0.9.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2014-07-10</date>
+   <license>apache</license>
+   <notes>
+0.9.0 alpha release.
+   </notes>
+  </release>
+ </changelog>
+</package>
